@@ -1,15 +1,12 @@
-import { DoWork, ObservableWorker } from 'observable-webworker';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+/// <reference lib="webworker" />
 
-@ObservableWorker()
-export class DemoWorker implements DoWork<string, string> {
+addEventListener('message', ({ data }) => {
+  const response = `worker response to ${data}`;
 
-  public work(input$: Observable<string>): Observable<string> {
-
-    return input$.pipe(
-      map(data => `worker response to ${data}`)
-    );
+  const now = new Date().getTime();
+  while (new Date().getTime() < now + 3000) {
+    /* do nothing; this will exit once it reaches the time limit */
+    /* if you want you could do something and exit */
   }
-
-}
+  postMessage(response);
+});
