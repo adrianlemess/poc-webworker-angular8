@@ -9,26 +9,30 @@ import { Observable, of } from 'rxjs';
 })
 export class AppComponent {
   title = 'observables-workers';
+  private counter = 0;
+  private counterRxjs = 0;
+
+  // runWorker() {
+  //   const demoWorker = new Worker('./demo.worker', { type: 'module' });
+  //   demoWorker.onmessage = (message) => {
+  //     console.log(`Got message`, message.data);
+  //     this.counter++;
+  //   };
+
+  //   const messageSent = this.counter + ' hello';
+  //   demoWorker.postMessage(messageSent);
+
+  // }
 
   runWorker() {
-    const demoWorker = new Worker('./demo.worker', { type: 'module' });
-
-    demoWorker.onmessage = (message) => {
-      console.log(`Got message`, message.data);
-    };
-
-    demoWorker.postMessage('hello');
-
-  }
-
-  runWorkerRxjs() {
 
     // We can pass a stream of data to be process on worker
-    const input$: Observable<string> = of('hello');
+    const input$: Observable<string> = of(`${this.counterRxjs} - hello`);
 
     fromWorker<string, string>(() => new Worker('./demo-rxjs.worker', { type: 'module' }), input$)
       .subscribe(message => {
         console.log(`Got message`, message);
+        this.counterRxjs++;
       });
 
   }
