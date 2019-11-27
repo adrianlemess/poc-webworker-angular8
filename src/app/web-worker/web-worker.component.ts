@@ -27,6 +27,15 @@ export class WebWorkerComponent implements OnInit {
     const messageSent = this.counter + ' hello';
     demoWorker.postMessage(messageSent);
 
+    // const data = this.counter + ' hello';
+    // const response = `worker response to ${data}`;
+
+    // const now = new Date().getTime();
+    // while (new Date().getTime() < now + 3000) {
+    //   /* do nothing; this will exit once it reaches the time limit */
+    //   /* if you want you could do something and exit */
+    // }
+    // console.log(response);
   }
 
   // runWorker() {
